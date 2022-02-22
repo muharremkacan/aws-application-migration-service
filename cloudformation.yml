@@ -30,7 +30,6 @@ Resources:
            wget -O ./aws-replication-installer-init.py https://aws-application-migration-service-us-east-1.s3.us-east-1.amazonaws.com/latest/linux/aws-replication-installer-init.py
           
 
-  # our EC2 security group
   SSHSG:
     Type: AWS::EC2::SecurityGroup
     Properties:
