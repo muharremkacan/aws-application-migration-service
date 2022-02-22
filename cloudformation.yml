@@ -24,7 +24,7 @@ Resources:
            chmod +x /usr/local/bin/docker-compose
            yum install git -y
            git clone https://github.com/muharremkacan/aws-application-migration-service.git
-           cd aws-application-migration-service
+           cd ~/aws-application-migration-service
            docker-compose up -d
 
 
