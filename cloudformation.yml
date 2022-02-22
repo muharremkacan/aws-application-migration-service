@@ -1,0 +1,44 @@
+Parameters:
+  SSHKey:
+    Type: AWS::EC2::KeyPair::KeyName
+  
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: us-east-1a
+      ImageId: ami-033b95fb8079dc481
+      InstanceType: t2.micro
+      KeyName: !Ref SSHKey
+      SecurityGroups:
+        - !Ref SSHSG
+      UserData: 
+        Fn::Base64: |
+           #! /bin/bash
+           yum update -y
+           amazon-linux-extras install docker -y
+           systemctl start docker
+           systemctl enable docker
+           usermod -a -G docker ec2-user
+           curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+           chmod +x /usr/local/bin/docker-compose
+           yum install git -y
+           git clone https://github.com/muharremkacan/aws-application-migration-service.git
+           cd aws-application-migration-service
+           docker-compose up -d
+
+
+  # our EC2 security group
+  SSHSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SSH and HTTP
+      SecurityGroupIngress:
+      - CidrIp: 0.0.0.0/0
+        FromPort: 22
+        IpProtocol: tcp
+        ToPort: 22
+      - CidrIp: 0.0.0.0/0
+        FromPort: 80
+        IpProtocol: tcp
+        ToPort: 80
