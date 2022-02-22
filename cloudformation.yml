@@ -42,3 +42,7 @@ Resources:
         FromPort: 80
         IpProtocol: tcp
         ToPort: 80
+
+Outputs:
+  MyInstanceDNS:
+    Value: !GetAtt MyInstance.PublicDnsName
