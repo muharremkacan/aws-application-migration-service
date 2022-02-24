@@ -3,7 +3,7 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
   
 Resources:
-  MyInstance:
+  On-Prem-Instance:
     Type: AWS::EC2::Instance
     Properties:
       AvailabilityZone: us-east-1a
@@ -18,7 +18,7 @@ Resources:
           Ebs:
             VolumeSize: '12'
       SecurityGroups:
-        - !Ref SSHSG
+        - !Ref On-Prem-SG
       UserData: 
         Fn::Base64: |
            #! /bin/bash
@@ -36,10 +36,10 @@ Resources:
            cd aws-application-migration-service
            docker-compose up -d
 
-  SSHSG:
+  On-Prem-SG:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: SSH and HTTP
+      GroupDescription: SSH, HTTP, HTTPS and TCP 1500
       SecurityGroupIngress:
       - CidrIp: 0.0.0.0/0
         FromPort: 22
