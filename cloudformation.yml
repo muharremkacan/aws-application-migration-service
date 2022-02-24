@@ -3,7 +3,7 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
   
 Resources:
-  On-Prem-Instance:
+  OnPremInstance:
     Type: AWS::EC2::Instance
     Properties:
       AvailabilityZone: us-east-1c
@@ -18,7 +18,7 @@ Resources:
           Ebs:
             VolumeSize: '12'
       SecurityGroups:
-        - !Ref On-Prem-SG
+        - !Ref OnPremSG
       UserData: 
         Fn::Base64: |
            #! /bin/bash
@@ -40,7 +40,7 @@ Resources:
            cd aws-application-migration-service
            docker-compose up -d
 
-  On-Prem-SG:
+  OnPremSG:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: SSH, HTTP, HTTPS and TCP 1500
@@ -63,4 +63,4 @@ Resources:
         ToPort: 1500
 Outputs:
   MyInstanceDNS:
-    Value: !GetAtt MyInstance.PublicDnsName
+    Value: !GetAtt OnPremInstance.PublicDnsName
