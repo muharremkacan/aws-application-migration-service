@@ -27,15 +27,15 @@ Resources:
            systemctl start docker
            systemctl enable docker
            usermod -a -G docker ec2-user
-           curl -L "https://github.com/docker/compose/releases/download/1.27.4/ \
+           curl -L "https://github.com/docker/compose/releases/download/1.27.4/\
            docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
            chmod +x /usr/local/bin/docker-compose
            yum install git -y
            cd /home/ec2-user
-           wget -O ./aws-replication-installer-init.py https:// \
+           wget -O ./aws-replication-installer-init.py https://\
            aws-application-migration-service-us-east-1.s3.us-east-1.amazonaws.com/ \
            latest/linux/aws-replication-installer-init.py
-           git clone https://github.com/muharremkacan/ \
+           git clone https://github.com/muharremkacan/\
            aws-application-migration-service.git
            cd aws-application-migration-service
            docker-compose up -d
